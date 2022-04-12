@@ -1,10 +1,11 @@
-import { InputMessage, OutputMessage } from '../types';
+import { InputMessage, OutputMessage, ScenarioMap } from './types';
 import fetch from 'node-fetch';
 import { createClient }from 'redis';
 
 const redisClient = createClient();
+redisClient.connect();
 export class MessageListener {
-    messageHandlers: Map<number, ((message: InputMessage) => void)> = new Map();
+    messageHandlers: ScenarioMap = new Map();
     webhookToken: string;
 
     constructor(webhookToken: string,) {
@@ -17,22 +18,22 @@ export class MessageListener {
             console.log(`WARNING: Empty handlers map`);
             return;
         }
-        const chat_id = message.chat.id;
-        const element_id = Number(await redisClient.get(chat_id));
-        if (!element_id) {
-            redisClient.set(chat_id, 0);
-            this.messageHandlers.get(0)!(message);
-            return;
-        } else if (!this.messageHandlers.has(element_id)) {
+        const chat_id: string = message.chat.id;
+        const element_id: string = await redisClient.get(chat_id) || 'init';
+        const handler = this.messageHandlers.get(element_id);
+        if (!handler) {
             console.log(`WARNING: client has wrong element_id ${chat_id} ${element_id}`);
+            redisClient.del(chat_id);
+            redisClient.set(chat_id, 'init');
             return;
         }
-        this.messageHandlers.get(element_id)!(message);
+        let nextElement = handler(message);
+        if(!nextElement) return;
         redisClient.del(chat_id);
-        redisClient.set(chat_id, element_id + 1);
+        redisClient.set(chat_id, nextElement);
     }
 
-    setHandlers(handlers: Map<number, ((message: InputMessage) => void)>) {
+    setHandlers(handlers: ScenarioMap) {
         this.messageHandlers = handlers;
     }
 

@@ -22,5 +22,7 @@ export type InlineKeyboardButton = {
 }
 
 export type InlineKeyboardMarkup = {
-    inline_keyboard: InlineKeyboardButton[]
+    keyboard: InlineKeyboardButton[][]
 }
+
+export type ScenarioMap = Map<string, ((message: InputMessage) => string | undefined)>;
