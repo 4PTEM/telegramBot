@@ -26,3 +26,16 @@ export type InlineKeyboardMarkup = {
 }
 
 export type ScenarioMap = Map<string, ((message: InputMessage) => string | undefined)>;
+
+export type User = {
+    user_id: string,
+    expenses: Expense[],
+    created_at: string
+}
+
+export type Expense = {
+    category: string,
+    last_week: number,
+    total: number,
+    weeks_count: number
+}
