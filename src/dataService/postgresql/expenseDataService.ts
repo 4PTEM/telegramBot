@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
-import { ExpenseDataServiceInteface } from '../interface';
+import { ExpenseDataServiceInterface } from '../interface';
 
-export class ExpenseDataService implements ExpenseDataServiceInteface{
+export class ExpenseDataService implements ExpenseDataServiceInterface{
     private pool: Pool;
     constructor(pool: Pool) {
         this.pool = pool;

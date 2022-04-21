@@ -3,6 +3,7 @@ import { Processor } from './messageHelper';
 import { MessageListener } from './messageListener';
 import * as constants from './constants';
 import { ScenarioMap } from './types';
+import controller from './controller';
 
 const app = express();
 

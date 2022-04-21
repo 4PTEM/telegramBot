@@ -10,6 +10,6 @@ export interface CategoryDataServiceInterface {
 
 }
 
-export interface ExpenseDataServiceInteface {
+export interface ExpenseDataServiceInterface {
 
 }
