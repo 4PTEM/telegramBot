@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
-import { CategoryController } from './controller/basic controllers/categoryController';
-import { ExpenseController } from './controller/basic controllers/expenseController';
-import { UserController } from './controller/basic controllers/userController';
+import { CategoryController } from './controller/basicControllers/categoryController';
+import { ExpenseController } from './controller/basicControllers/expenseController';
+import { UserController } from './controller/basicControllers/userController';
 import { Controller } from './controller/controller';
 import { CategoryDataService } from './dataService/postgresql/categoryDataService';
 import { ExpenseDataService } from './dataService/postgresql/expenseDataService';
