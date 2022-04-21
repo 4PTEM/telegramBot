@@ -15,7 +15,7 @@ export class UserService implements UserServiceInterface {
         });
     }
 
-    async createUser(user: User): Promise<void> {
+    async createUser(user: User): Promise<User> {
         if (!this.userCollection) throw new Error('No connection');
         await this.userCollection.insertOne(user);
         return user;
