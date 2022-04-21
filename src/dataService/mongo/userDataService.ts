@@ -1,9 +1,9 @@
 import { Collection, Db, MongoClient } from 'mongodb';
-import { User } from '../types';
-import { UserServiceInterface } from './interface';
+import { User } from '../../types';
+import { UserDataServiceInterface } from '../interface';
 
 const client = new MongoClient('mongodb://localhost:27017/');
-export class UserService implements UserServiceInterface {
+export class UserDataService implements UserDataServiceInterface {
     private db?: Db;
     private userCollection?: Collection<User>;
     constructor(client: MongoClient, database: string, usercollection: string) {

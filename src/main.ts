@@ -14,7 +14,7 @@ const scenario: ScenarioMap = new Map([
     ['init', processor.Answer(/\/start/,
         `Привет, я бот Dreamoney!
         Я создан для того, чтобы конралировать доходы и расходы,
-        а также добиваться целей. ![Что ты умеешь?]`, 'what can you do')],
+        а также добиваться целей. ![Что ты умеешь?]`, 'what can you do', )],
     ['what can you do', processor.Answer(/Что ты умеешь\?/,
         `Я создать категории трат или 
         помочь тебе и предложить стандартные. 

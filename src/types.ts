@@ -3,7 +3,7 @@ export type InputMessage = {
     from: any,
     sender_chat?: any,
     date: number,
-    chat: any,
+    chat: { id: string },
     text: string,
     entities: any[],
     document: any,
@@ -11,7 +11,7 @@ export type InputMessage = {
 }
 
 export type OutputMessage = {
-    chat_id: number,
+    chat_id: string,
     text: string,
     reply_markup?: InlineKeyboardMarkup
 }
@@ -28,7 +28,7 @@ export type InlineKeyboardMarkup = {
 export type ScenarioMap = Map<string, ((message: InputMessage) => string | undefined)>;
 
 export type User = {
-    user_id: string,
+    id: string,
     created_at: string,
     last_message: string
 }
