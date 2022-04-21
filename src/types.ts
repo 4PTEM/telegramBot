@@ -29,13 +29,19 @@ export type ScenarioMap = Map<string, ((message: InputMessage) => string | undef
 
 export type User = {
     user_id: string,
-    expenses: Expense[],
+    created_at: string,
+    last_message: string
+}
+
+export type Category = {
+    id: number,
+    user_id: string,
+    category_name: string,
     created_at: string
 }
 
-export type Expense = {
-    category: string,
-    last_week: number,
-    total: number,
-    weeks_count: number
+export type ExpenseRecord = {
+    categorie_id: number,
+    created_at: string,
+    cost: number
 }
