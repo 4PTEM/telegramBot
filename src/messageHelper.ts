@@ -11,16 +11,9 @@ export class Processor {
     Answer(pattern: RegExp, answer: string, nextElement: string, callback?: Function) {
         return (message: InputMessage) => {
             if (!pattern.test(message.text)) return;
-
-            const outputMessage: OutputMessage = {
-                chat_id: message.chat.id,
-                text: answer
-            }
-
-            ButtonParser.parseButtons(outputMessage);
-            this.sendMessage(outputMessage);
+            this.sendMessage({ chat_id: message.chat.id, text: answer });
             if (!callback) return nextElement;
-            callback();
+            callback(message);
             return nextElement;
         }
     }
@@ -31,15 +24,17 @@ export class Processor {
                 if (regex.test(message.text)) {
                     //@ts-ignore
                     let { answer, nextElement } = branches.get(regex);
-                    const outputMessage: OutputMessage = {
-                        chat_id: message.chat.id,
-                        text: answer
-                    }
-                    ButtonParser.parseButtons(outputMessage);
-                    this.sendMessage(outputMessage);
+                    this.sendMessage({ chat_id: message.chat.id, text: answer });
                     return nextElement;
                 }
             }
+        }
+    }
+
+    Loop(escapePatten: RegExp, action: (message: InputMessage) => string | undefined, nextElement: string) {
+        return (message: InputMessage) => {
+            if(escapePatten.test(message.text)) return nextElement;
+            return action(message);
         }
     }
 
@@ -55,6 +50,8 @@ export class Processor {
         return response
     }
     sendMessage(message: OutputMessage) {
+        message.text = message.text.trim().replace(/\s\s+/g, ' ')
+        ButtonParser.parseButtons(message);
         this.request('sendMessage', message);
     }
 }
